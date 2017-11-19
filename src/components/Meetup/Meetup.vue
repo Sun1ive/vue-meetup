@@ -25,6 +25,7 @@
 export default {
   props: {
     id: String,
+    required: true,
   },
   computed: {
     meetup() {
