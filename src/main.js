@@ -29,6 +29,9 @@ Vue.use(Vuetify, {
     VToolbar,
     transitions,
   },
+  theme: {
+    primary: '#C62828',
+  },
 });
 
 Vue.config.productionTip = false;
