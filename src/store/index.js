@@ -12,6 +12,9 @@ const store = new Vuex.Store({
         id: 'jiofsd',
         title: 'Meetup in NY',
         date: '2018-07-19',
+        time: '17:00',
+        location: 'NY',
+        desc: 'Somewhere there',
       },
       {
         img:
@@ -19,6 +22,9 @@ const store = new Vuex.Store({
         id: 'gfvzxc',
         title: 'Meetup in Paris',
         date: '2018-07-18',
+        time: '17:00',
+        location: 'Paris',
+        desc: 'Somewhere there',
       },
       {
         img:
@@ -26,6 +32,9 @@ const store = new Vuex.Store({
         id: 'lkfrlkz',
         title: 'Meetup in Berlin',
         date: '2018-07-17',
+        time: '17:00',
+        location: 'Berlin',
+        desc: 'Somewhere there',
       },
     ],
     user: {
@@ -46,6 +55,7 @@ const store = new Vuex.Store({
         img: payload.img,
         desc: payload.desc,
         date: payload.date,
+        time: payload.time,
         id: 'xcvjdsfj23',
       };
       // firebase there

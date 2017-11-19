@@ -14,6 +14,8 @@ import {
   VCard,
   VForm,
   VTextField,
+  VDatePicker,
+  VTimePicker,
   transitions,
 } from 'vuetify';
 import '@/stylus/main.styl';
@@ -37,6 +39,8 @@ Vue.use(Vuetify, {
     VCard,
     VForm,
     VTextField,
+    VDatePicker,
+    VTimePicker,
     transitions,
   },
   theme: {

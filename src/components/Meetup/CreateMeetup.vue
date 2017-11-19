@@ -35,6 +35,19 @@
           </v-layout>
           <v-layout>
             <v-flex xs12 sm6 offset-sm3>
+              <h3>Choose a date and time</h3>
+              <v-date-picker v-model="date"></v-date-picker>
+              <p>{{ date }}</p>
+            </v-flex>
+          </v-layout>
+          <v-layout>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-time-picker format="24hr" v-model="time"></v-time-picker>
+              <p>{{ time }}</p>
+            </v-flex>
+          </v-layout>
+          <v-layout>
+            <v-flex xs12 sm6 offset-sm3>
               <v-btn type="submit" :disabled="!formIsValid" class="primary ml-0">Create Meetup</v-btn>
             </v-flex>
           </v-layout>
@@ -53,6 +66,8 @@ export default {
       img:
         'https://i.pinimg.com/originals/ec/2a/90/ec2a909c5c1d2e670650ffba076c6e5c.jpg',
       desc: '',
+      date: '',
+      time: '',
     };
   },
   methods: {
@@ -65,7 +80,8 @@ export default {
         location: this.location,
         img: this.img,
         desc: this.desc,
-        date: new Date(),
+        date: this.date,
+        time: this.time,
       };
       this.$store.dispatch('createMeetup', meetupData);
       setTimeout(() => {
@@ -79,7 +95,9 @@ export default {
         this.title !== '' &&
         this.location !== '' &&
         this.img !== '' &&
-        this.desc !== ''
+        this.desc !== '' &&
+        this.date !== '' &&
+        this.time !== ''
       );
     },
   },
