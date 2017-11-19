@@ -29,7 +29,7 @@ export default new Router({
       component: CreateMeetup,
     },
     {
-      path: '/mrofile',
+      path: '/profile',
       name: 'Profile',
       component: Profile,
     },
