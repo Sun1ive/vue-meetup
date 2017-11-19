@@ -41,11 +41,11 @@ const store = new Vuex.Store({
     user: null,
   },
   mutations: {
-    createMeetup(state, payload) {
-      state.loadedMeetups.push(payload);
-    },
     setUser(state, payload) {
       state.user = payload;
+    },
+    createMeetup(state, payload) {
+      state.loadedMeetups.push(payload);
     },
   },
   actions: {
@@ -73,6 +73,17 @@ const store = new Vuex.Store({
             commit('setUser', newUser);
           })
           .catch(e => console.log(e));
+    },
+    signUserIn({ commit }, payload) {
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        .then((user) => {
+          const newUser = {
+            id: user.uid,
+            registeredMeetups: [],
+          };
+          commit('setUser', newUser);
+        })
+        .catch(e => console.log(e));
     },
   },
   getters: {

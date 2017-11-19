@@ -41,16 +41,19 @@ export default {
       ];
       if (this.userIsAuth) {
         menuItems = [
-        { icon: 'supervisor_account', title: 'View Meetups', link: '/meetups' },
-        { icon: 'room', title: 'Organize Meetup', link: '/createmeetup' },
-        { icon: 'person', title: 'Profile', link: '/profile' },
-        ]
+          { icon: 'supervisor_account', title: 'View Meetups', link: '/meetups' },
+          { icon: 'room', title: 'Organize Meetup', link: '/createmeetup' },
+          { icon: 'person', title: 'Profile', link: '/profile' },
+        ];
       }
       return menuItems;
     },
     userIsAuth() {
-      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-    }
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
+    },
   },
 };
 </script>
