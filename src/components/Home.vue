@@ -27,43 +27,28 @@
 
 <script>
 export default {
-  data() {
-    return {
-      meetups: [
-        {
-          img: 'https://images.pexels.com/photos/358382/pexels-photo-358382.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb',
-          id: 'jiofsd',
-          title: 'Meetup in NY',
-        },
-        {
-          img: 'https://images.pexels.com/photos/2363/france-landmark-lights-night.jpg?w=1260&h=750&auto=compress&cs=tinysrgb',
-          id: 'gfvzxc',
-          title: 'Meetup in Paris',
-        },
-        {
-          img: 'https://images.pexels.com/photos/208699/pexels-photo-208699.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb',
-          id: 'lkfrlkz',
-          title: 'Meetup in Berlin',
-        },
-      ],
-    };
+  computed: {
+    meetups() {
+      return this.$store.getters.featuredMeetups;
+    },
   },
   methods: {
     onLoadMeetup(id) {
-      this.$router.push(`/meetups/${id}`)
-    }
-  }
+      this.$router.push(`/meetups/${id}`);
+    },
+  },
 };
 </script>
 
 <style scoped lang="stylus">
-.Title
-  position absolute
-  bottom 50px
-  color #fff
-  font-size 2rem
-  background-color rgba(0,0,0,.5)
-  padding 15px
-  width 100%
-  text-align center
+.Title {
+  position: absolute;
+  bottom: 50px;
+  color: #fff;
+  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  width: 100%;
+  text-align: center;
+}
 </style>
