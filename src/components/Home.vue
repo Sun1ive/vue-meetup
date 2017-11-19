@@ -11,7 +11,7 @@
     <v-layout>
       <v-flex>
         <v-carousel>
-          <v-carousel-item v-for="(meetup,i) in meetups" :key="i" :src="meetup.img">
+          <v-carousel-item v-for="(meetup,i) in meetups" :key="i" :src="meetup.img" @click="onLoadMeetup(meetup.id)">
             <div class="Title">{{ meetup.title }}</div>
           </v-carousel-item>
         </v-carousel>
@@ -48,6 +48,11 @@ export default {
       ],
     };
   },
+  methods: {
+    onLoadMeetup(id) {
+      this.$router.push(`/meetups/${id}`)
+    }
+  }
 };
 </script>
 
