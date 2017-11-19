@@ -10,8 +10,10 @@ import {
   VIcon,
   VGrid,
   VToolbar,
+  VCarousel,
   transitions,
 } from 'vuetify';
+import '@/stylus/main.styl';
 import '../node_modules/vuetify/src/stylus/app.styl';
 
 import App from './App';
@@ -27,6 +29,7 @@ Vue.use(Vuetify, {
     VIcon,
     VGrid,
     VToolbar,
+    VCarousel,
     transitions,
   },
   theme: {
