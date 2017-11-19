@@ -66,11 +66,7 @@ export default {
   methods: {
     onSignup() {
       // vuex
-      console.log({
-        email: this.email,
-        password: this.password,
-        conf: this.confirmPassword,
-      });
+      this.$store.dispatch('signUserUp', { email: this.email, password: this.password });
     },
   },
   computed: {
@@ -78,6 +74,16 @@ export default {
       return this.password !== this.confirmPassword
         ? 'Password do not match'
         : true;
+    },
+    user() {
+      return this.$store.getters.user;
+    }
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/');
+      };
     },
   },
 };

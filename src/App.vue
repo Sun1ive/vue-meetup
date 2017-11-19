@@ -31,14 +31,26 @@ export default {
   data() {
     return {
       drawer: false,
-      menuItems: [
+    };
+  },
+  computed: {
+    menuItems() {
+      let menuItems = [
+        { icon: 'face', title: 'Sign up', link: '/signup' },
+        { icon: 'lock_open', title: 'Sign in', link: '/signin' },
+      ];
+      if (this.userIsAuth) {
+        menuItems = [
         { icon: 'supervisor_account', title: 'View Meetups', link: '/meetups' },
         { icon: 'room', title: 'Organize Meetup', link: '/createmeetup' },
         { icon: 'person', title: 'Profile', link: '/profile' },
-        { icon: 'face', title: 'Sign up', link: '/signup' },
-        { icon: 'lock_open', title: 'Sign in', link: '/signin' },
-      ],
-    };
+        ]
+      }
+      return menuItems;
+    },
+    userIsAuth() {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    }
   },
 };
 </script>
