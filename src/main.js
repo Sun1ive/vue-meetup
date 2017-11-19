@@ -24,6 +24,7 @@ import '../node_modules/vuetify/src/stylus/app.styl';
 import App from './App';
 import store from './store';
 import router from './router';
+import DateFilter from './filters/date';
 
 Vue.use(Vuetify, {
   components: {
@@ -47,6 +48,8 @@ Vue.use(Vuetify, {
     primary: '#C62828',
   },
 });
+
+Vue.filter('date', DateFilter);
 
 Vue.config.productionTip = false;
 
