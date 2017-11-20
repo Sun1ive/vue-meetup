@@ -7,6 +7,12 @@
         </v-list-tile-action>
         <v-list-tile-content>{{ item.title }}</v-list-tile-content>
       </v-list-tile>
+      <v-list-tile v-if="userIsAuth">
+        <v-list-tile-action>
+          <v-icon>exit_to_app</v-icon>
+          <v-list-tile-content @click="onLogOut">Log out</v-list-tile-content>
+        </v-list-tile-action>
+      </v-list-tile>
     </v-navigation-drawer>
     <v-toolbar class="primary" dark>
       <v-toolbar-side-icon @click="drawer = !drawer" class="hidden-sm-and-up"></v-toolbar-side-icon>
@@ -17,6 +23,7 @@
       <v-toolbar-items class="hidden-xs-only">
         <v-btn flat v-for="(item, i) in menuItems" :key="i" :to="item.link">
           <v-icon left>{{ item.icon }}</v-icon>{{ item.title }}</v-btn>
+          <v-btn @click="onLogOut" v-if="userIsAuth" flat><v-icon>exit_to_app</v-icon>Log out</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <main>
@@ -32,6 +39,11 @@ export default {
     return {
       drawer: false,
     };
+  },
+  methods: {
+    onLogOut() {
+      this.$store.dispatch('logOut');
+    }
   },
   computed: {
     menuItems() {
