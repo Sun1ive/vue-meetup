@@ -18,6 +18,7 @@ import {
   VDatePicker,
   VTimePicker,
   VAlert,
+  VProgressCircular,
   transitions,
 } from 'vuetify';
 import '@/stylus/main.styl';
@@ -48,6 +49,7 @@ Vue.use(Vuetify, {
     VDatePicker,
     VTimePicker,
     VAlert,
+    VProgressCircular,
     transitions,
   },
   theme: {

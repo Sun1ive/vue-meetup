@@ -97,7 +97,10 @@ const store = new Vuex.Store({
         date: payload.date,
         time: payload.time,
       };
-      firebase.database().ref('meetups').push(meetup)
+      firebase
+        .database()
+        .ref('meetups')
+        .push(meetup)
         .then((data) => {
           const key = data.key;
           commit('createMeetup', { ...meetup, id: key });
@@ -109,24 +112,28 @@ const store = new Vuex.Store({
     signUserUp({ commit }, payload) {
       commit('setLoading', true);
       commit('clearError');
-      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-          .then((user) => {
-            commit('setLoading', false);
-            const newUser = {
-              id: user.uid,
-              registeredMeetups: [],
-            };
-            commit('setUser', newUser);
-          })
-          .catch((e) => {
-            commit('setLoading', false);
-            commit('setError', e);
-          });
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(payload.email, payload.password)
+        .then((user) => {
+          commit('setLoading', false);
+          const newUser = {
+            id: user.uid,
+            registeredMeetups: [],
+          };
+          commit('setUser', newUser);
+        })
+        .catch((e) => {
+          commit('setLoading', false);
+          commit('setError', e);
+        });
     },
     signUserIn({ commit }, payload) {
       commit('setLoading', true);
       commit('clearError');
-      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(payload.email, payload.password)
         .then((user) => {
           commit('setLoading', false);
           const newUser = {

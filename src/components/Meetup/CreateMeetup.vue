@@ -61,7 +61,7 @@ export default {
     return {
       title: '',
       location: '',
-      img: 'https://i.pinimg.com/originals/ec/2a/90/ec2a909c5c1d2e670650ffba076c6e5c.jpg',
+      img: '',
       desc: '',
       date: '',
       time: '',
