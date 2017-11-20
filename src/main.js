@@ -73,5 +73,6 @@ new Vue({
       projectId: 'devmeetup-75da4',
       storageBucket: 'devmeetup-75da4.appspot.com',
     });
+    this.$store.dispatch('loadMeetups');
   },
 });

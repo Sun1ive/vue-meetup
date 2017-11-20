@@ -58,8 +58,36 @@ const store = new Vuex.Store({
     clearError(state) {
       state.error = null;
     },
+    setLoadedMeetups(state, payload) {
+      state.loadedMeetups = payload;
+    },
   },
   actions: {
+    loadMeetups({ commit }) {
+      commit('setLoading', true);
+      firebase.database().ref('meetups').once('value')
+        .then((data) => {
+          const meetups = [];
+          const obj = data.val();
+          for (let key in obj) {
+            meetups.push({
+              id: key,
+              title: obj[key].title,
+              desc: obj[key].desc,
+              img: obj[key].img,
+              date: obj[key].date,
+              time: obj[key].title,
+              location: obj[key].location,
+            });
+          }
+          commit('setLoadedMeetups', meetups);
+          commit('setLoading', false);
+        })
+        .catch((e) => {
+          console.log(e);
+          commit('setLoading', true);
+        });
+    },
     createMeetup({ commit }, payload) {
       const meetup = {
         title: payload.title,
