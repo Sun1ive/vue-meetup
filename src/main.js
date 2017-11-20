@@ -17,6 +17,7 @@ import {
   VTextField,
   VDatePicker,
   VTimePicker,
+  VAlert,
   transitions,
 } from 'vuetify';
 import '@/stylus/main.styl';
@@ -26,6 +27,9 @@ import App from './App';
 import store from './store';
 import router from './router';
 import DateFilter from './filters/date';
+import Alert from './components/Shared/Alert';
+
+Vue.component('app-alert', Alert);
 
 Vue.use(Vuetify, {
   components: {
@@ -43,6 +47,7 @@ Vue.use(Vuetify, {
     VTextField,
     VDatePicker,
     VTimePicker,
+    VAlert,
     transitions,
   },
   theme: {
