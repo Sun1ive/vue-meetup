@@ -8,8 +8,7 @@ const store = new Vuex.Store({
   state: {
     loadedMeetups: [
       {
-        img:
-          'https://images.pexels.com/photos/358382/pexels-photo-358382.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb',
+        img: 'https://images.pexels.com/photos/358382/pexels-photo-358382.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb',
         id: 'jiofsd',
         title: 'Meetup in NY',
         date: new Date(),
