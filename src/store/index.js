@@ -68,16 +68,20 @@ const store = new Vuex.Store({
         desc: payload.desc,
         date: payload.date,
         time: payload.time,
-        id: 'xcvjdsfj23',
       };
+      firebase.database().ref('meetups').push(meetup)
+        .then((data) => {
+          const key = data.key;
+          commit('createMeetup', { ...meetup, id: key });
+          console.log(data);
+        })
+        .catch(e => console.log(e));
       // firebase there
-      commit('createMeetup', meetup);
     },
     signUserUp({ commit }, payload) {
       commit('setLoading', true);
       commit('clearError');
-      firebase
-        .auth().createUserWithEmailAndPassword(payload.email, payload.password)
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
           .then((user) => {
             commit('setLoading', false);
             const newUser = {
