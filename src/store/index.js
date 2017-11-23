@@ -48,6 +48,19 @@ const store = new Vuex.Store({
     createMeetup(state, payload) {
       state.loadedMeetups.push(payload);
     },
+    updateMeetup(state, payload) {
+      const meetup = state.loadedMeetups.find(m => m.id === payload.id);
+
+      if (payload.title) {
+        meetup.title = payload.title;
+      }
+      if (payload.desc) {
+        meetup.desc = payload.desc;
+      }
+      if (payload.date) {
+        meetup.date = payload.date;
+      }
+    },
     setLoading(state, payload) {
       state.loading = payload;
     },
@@ -117,12 +130,33 @@ const store = new Vuex.Store({
       }
       upload();
     },
+    updateMeetupData({ commit }, payload) {
+      commit('setLoading', true);
+      const updatedObj = {};
+      if (payload.title) {
+        updatedObj.title = payload.title;
+      }
+      if (payload.desc) {
+        updatedObj.desc = payload.desc;
+      }
+      if (payload.date) {
+        updatedObj.date = payload.date;
+      }
+      async function update() {
+        try {
+          await firebase.database().ref('meetups').child(payload.id).update(updatedObj);
+          commit('setLoading', false);
+          commit('updateMeetup', payload);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      update();
+    },
     signUserUp({ commit }, payload) {
       commit('setLoading', true);
       commit('clearError');
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(payload.email, payload.password)
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then((user) => {
           commit('setLoading', false);
           const newUser = {
@@ -139,9 +173,7 @@ const store = new Vuex.Store({
     signUserIn({ commit }, payload) {
       commit('setLoading', true);
       commit('clearError');
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(payload.email, payload.password)
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then((user) => {
           commit('setLoading', false);
           const newUser = {
