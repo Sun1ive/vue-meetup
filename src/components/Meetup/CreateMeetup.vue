@@ -20,6 +20,9 @@
           </v-layout>
           <v-layout>
             <v-flex xs12 sm6 offset-sm3>
+              <v-alert color="error" icon="warning" value="true" v-if="error">
+                {{ this.$store.getters.error }}
+              </v-alert>
               <v-btn raised class="ml-0 primary" @click="onPickFile">Upload Image</v-btn>
               <input @change="onFilePicked" ref="fileInput" accept="image/*" type="file" hidden="true">
             </v-flex>
@@ -67,6 +70,7 @@ export default {
       date: '',
       time: '',
       image: null,
+      error: false,
     };
   },
   methods: {
@@ -96,9 +100,17 @@ export default {
     onFilePicked(event) {
       const files = event.target.files;
       let fileName = files[0].name;
+
       if (fileName.lastIndexOf('.') <= 0) {
-        return alert('Please add a valid file');
+        const err = 'Please upload valid file'
+        this.$store.commit('setError', err);
+        this.error = true;
+        return
+      } else {
+        this.error = false;
+        this.$store.commit('clearError');
       }
+
       const fileReader = new FileReader();
       fileReader.addEventListener('load', () => {
         this.img = fileReader.result;
