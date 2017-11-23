@@ -19,6 +19,8 @@ import {
   VTimePicker,
   VAlert,
   VProgressCircular,
+  VDialog,
+  VDivider,
   transitions,
 } from 'vuetify';
 import '@/stylus/main.styl';
@@ -29,8 +31,10 @@ import store from './store';
 import router from './router';
 import DateFilter from './filters/date';
 import Alert from './components/Shared/Alert';
+import Edit from './components/Meetup/Edit/EditMeetupDetails';
 
 Vue.component('app-alert', Alert);
+Vue.component('app-edit', Edit);
 
 Vue.use(Vuetify, {
   components: {
@@ -50,6 +54,8 @@ Vue.use(Vuetify, {
     VTimePicker,
     VAlert,
     VProgressCircular,
+    VDialog,
+    VDivider,
     transitions,
   },
   theme: {

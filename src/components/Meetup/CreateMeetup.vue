@@ -99,7 +99,7 @@ export default {
     },
     onFilePicked(event) {
       const files = event.target.files;
-      let fileName = files[0].name;
+      const fileName = files[0].name;
 
       if (fileName.lastIndexOf('.') <= 0) {
         const err = 'Please upload valid file'
