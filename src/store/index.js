@@ -97,6 +97,25 @@ const store = new Vuex.Store({
         time: payload.time,
         creatorId: getters.user.id,
       };
+      async function upload() {
+        try {
+          const response = await firebase.database().ref('meetups').push(meetup);
+          const key = await response.key;
+          const filename = await payload.image.name;
+          const ext = await filename.slice(filename.lastIndexOf('.'));
+          const storage = await firebase.storage().ref(`meetups/${key}.${ext}`).put(payload.image);
+          const img = await storage.metadata.downloadURLs[0];
+          firebase.database().ref('meetups').child(key).update({ img });
+          commit('createMeetup', {
+            ...meetup,
+            img,
+            id: key,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      upload();
     },
     signUserUp({ commit }, payload) {
       commit('setLoading', true);

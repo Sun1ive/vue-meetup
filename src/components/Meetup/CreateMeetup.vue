@@ -79,12 +79,12 @@ export default {
         return;
       }
       if (!this.image) {
-        return
+        return;
       }
       const meetupData = {
         title: this.title,
         location: this.location,
-        img: this.image,
+        image: this.image,
         desc: this.desc,
         date: this.date,
         time: this.time,
@@ -112,9 +112,11 @@ export default {
       }
 
       const fileReader = new FileReader();
+
       fileReader.addEventListener('load', () => {
         this.img = fileReader.result;
       });
+
       fileReader.readAsDataURL(files[0]);
       this.image = files[0];
     },
