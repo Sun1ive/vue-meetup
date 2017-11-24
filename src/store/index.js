@@ -74,31 +74,67 @@ const store = new Vuex.Store({
     setLoadedMeetups(state, payload) {
       state.loadedMeetups = payload;
     },
+    registerUserForMeetup(state, payload) {
+      const id = payload.id;
+      if (state.user.registeredMeetups.findIndex(meetup => meetup.id === id) >= 0) {
+        return;
+      }
+      state.user.registeredMeetups.push(id);
+      state.user.fbKeys[id] = payload.fbKey;
+    },
+    unregisterUserFromMeetup(state, payload) {
+      const registeredMeetups = state.user.registeredMeetups;
+      registeredMeetups.splice(registeredMeetups.findIndex(meetup => meetup.id === payload), 1);
+      Reflect.deleteProperty(state.user.fbKeys, payload);
+    },
   },
   actions: {
+    registerUserForMeetup({ commit, getters }, payload) {
+      commit('setLoading', true);
+      async function registerUser() {
+        try {
+          const response = await firebase
+            .database()
+            .ref(`/users/${getters.user.id}`)
+            .child('/registrations/')
+            .push(payload);
+          commit('setLoading', false);
+          commit('registerUserForMeetup', { id: payload, fbKey: response.key });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      registerUser();
+    },
+    unregisterUserForMeetup({ commit }, payload) {
+      commit('setLoading', true);
+    },
     loadMeetups({ commit }) {
       commit('setLoading', true);
 
       async function loadMeetups() {
         try {
-        const data = await firebase.database().ref('meetups').once('value');
-        const meetups = [];
-        const obj = await data.val();
+          const data = await firebase
+            .database()
+            .ref('meetups')
+            .once('value');
+          const meetups = [];
+          const obj = await data.val();
 
-        for (const key in obj) {
-          meetups.push({
-            id: key,
-            title: obj[key].title,
-            desc: obj[key].desc,
-            img: obj[key].img,
-            date: obj[key].date,
-            time: obj[key].title,
-            location: obj[key].location,
-            creatorId: obj[key].creatorId,
-          });
-        };
-        commit('setLoadedMeetups', meetups);
-        commit('setLoading', false);
+          for (const key in obj) {
+            meetups.push({
+              id: key,
+              title: obj[key].title,
+              desc: obj[key].desc,
+              img: obj[key].img,
+              date: obj[key].date,
+              time: obj[key].title,
+              location: obj[key].location,
+              creatorId: obj[key].creatorId,
+            });
+          }
+          commit('setLoadedMeetups', meetups);
+          commit('setLoading', false);
         } catch (error) {
           console.log(error);
           commit('setLoading', true);

@@ -1,6 +1,6 @@
 <template>
   <v-dialog max-width="350" persistent v-model="registerDialog">
-    <v-btn accent slot="activator">
+    <v-btn primary accent slot="activator">
       {{ buttonText }}
     </v-btn>
     <v-card>
