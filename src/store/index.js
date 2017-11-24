@@ -78,32 +78,33 @@ const store = new Vuex.Store({
   actions: {
     loadMeetups({ commit }) {
       commit('setLoading', true);
-      firebase
-        .database()
-        .ref('meetups')
-        .once('value')
-        .then(data => {
-          const meetups = [];
-          const obj = data.val();
-          for (const key in obj) {
-            meetups.push({
-              id: key,
-              title: obj[key].title,
-              desc: obj[key].desc,
-              img: obj[key].img,
-              date: obj[key].date,
-              time: obj[key].title,
-              location: obj[key].location,
-              creatorId: obj[key].creatorId,
-            });
-          }
-          commit('setLoadedMeetups', meetups);
-          commit('setLoading', false);
-        })
-        .catch(e => {
-          console.log(e);
+
+      async function loadMeetups() {
+        try {
+        const data = await firebase.database().ref('meetups').once('value');
+        const meetups = [];
+        const obj = await data.val();
+
+        for (const key in obj) {
+          meetups.push({
+            id: key,
+            title: obj[key].title,
+            desc: obj[key].desc,
+            img: obj[key].img,
+            date: obj[key].date,
+            time: obj[key].title,
+            location: obj[key].location,
+            creatorId: obj[key].creatorId,
+          });
+        };
+        commit('setLoadedMeetups', meetups);
+        commit('setLoading', false);
+        } catch (error) {
+          console.log(error);
           commit('setLoading', true);
-        });
+        }
+      }
+      loadMeetups();
     },
     createMeetup({ commit, getters }, payload) {
       const meetup = {

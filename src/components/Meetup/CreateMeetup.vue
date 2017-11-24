@@ -106,10 +106,10 @@ export default {
         this.$store.commit('setError', err);
         this.error = true;
         return
-      } else {
-        this.error = false;
-        this.$store.commit('clearError');
       }
+
+      this.error = false;
+      this.$store.commit('clearError');
 
       const fileReader = new FileReader();
 
