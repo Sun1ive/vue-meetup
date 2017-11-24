@@ -23,14 +23,11 @@
           <v-card-media :src="meetup.img" height="400"></v-card-media>
           <v-card-text>
             <div class="info--text">{{ meetup.date | date }} {{ meetup.time }} - {{ meetup.location }}</div>
-            <div>
-              <app-edit-date :meetup="meetup"></app-edit-date>
-            </div>
             <div>{{ meetup.desc }}</div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="primary">Register</v-btn>
+            <app-register :meetupId="meetup.id"></app-register>
           </v-card-actions>
         </v-card>
       </v-flex>

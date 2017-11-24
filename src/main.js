@@ -32,9 +32,11 @@ import router from './router';
 import DateFilter from './filters/date';
 import Alert from './components/Shared/Alert';
 import Edit from './components/Meetup/Edit/EditMeetupDetails';
+import Register from './components/Meetup/Registration/RegisterDialog';
 
 Vue.component('app-alert', Alert);
 Vue.component('app-edit', Edit);
+Vue.component('app-register', Register);
 
 Vue.use(Vuetify, {
   components: {

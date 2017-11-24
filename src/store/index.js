@@ -194,20 +194,6 @@ const store = new Vuex.Store({
         }
       }
       loginUp();
-
-      /*       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-        .then((user) => {
-          commit('setLoading', false);
-          const newUser = {
-            id: user.uid,
-            registeredMeetups: [],
-          };
-          commit('setUser', newUser);
-        })
-        .catch((e) => {
-          commit('setLoading', false);
-          commit('setError', e);
-        }); */
     },
     signUserIn({ commit }, payload) {
       commit('setLoading', true);
@@ -230,21 +216,6 @@ const store = new Vuex.Store({
         }
       }
       loginIn();
-
-      /*
-      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-        .then((user) => {
-          commit('setLoading', false);
-          const newUser = {
-            id: user.uid,
-            registeredMeetups: [],
-          };
-          commit('setUser', newUser);
-        })
-        .catch((e) => {
-          commit('setLoading', false);
-          commit('setError', e);
-        }); */
     },
     autoSignIn({ commit }, payload) {
       commit('setUser', { id: payload.uid, registeredMeetups: [] });
