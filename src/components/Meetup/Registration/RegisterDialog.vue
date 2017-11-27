@@ -43,7 +43,13 @@ export default {
     };
   },
   methods: {
-    onAgree() {}
+    onAgree() {
+      if (this.userIsRegistered) {
+        this.$store.dispatch('unregisterUserForMeetup', this.meetupId);
+      } else {
+        this.$store.dispatch('registerUserForMeetup', this.meetupId);
+      }
+    },
   },
   computed: {
     userIsRegistered() {

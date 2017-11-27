@@ -82,7 +82,7 @@ const store = new Vuex.Store({
       state.user.registeredMeetups.push(id);
       state.user.fbKeys[id] = payload.fbKey;
     },
-    unregisterUserFromMeetup(state, payload) {
+    unregisterUserForMeetup(state, payload) {
       const registeredMeetups = state.user.registeredMeetups;
       registeredMeetups.splice(registeredMeetups.findIndex(meetup => meetup.id === payload), 1);
       Reflect.deleteProperty(state.user.fbKeys, payload);
@@ -106,8 +106,24 @@ const store = new Vuex.Store({
       }
       registerUser();
     },
-    unregisterUserForMeetup({ commit }, payload) {
+    unregisterUserForMeetup({ commit, getters }, payload) {
       commit('setLoading', true);
+      const user = getters.user;
+      const fbKey = user.fbKeys[payload];
+      if (user.fbKey) {
+        return;
+      }
+      async function unregister() {
+        try {
+          await firebase.database().ref(`users/${user.id}/registrations/`).child(fbKey).remove();
+          commit('unregisterUserForMeetup', payload);
+          commit('setLoading', false);
+        } catch (error) {
+          console.log(error);
+          commit('setLoading', false);
+        }
+      }
+      unregister();
     },
     loadMeetups({ commit }) {
       commit('setLoading', true);
@@ -221,6 +237,7 @@ const store = new Vuex.Store({
           const newUser = {
             id: response.uid,
             registeredMeetups: [],
+            fbKeys: {},
           };
           commit('setUser', newUser);
           commit('setLoading', false);
@@ -244,6 +261,7 @@ const store = new Vuex.Store({
           const newUser = {
             id: response.uid,
             registeredMeetups: [],
+            fbKeys: {},
           };
           commit('setUser', newUser);
         } catch (e) {
@@ -254,7 +272,7 @@ const store = new Vuex.Store({
       loginIn();
     },
     autoSignIn({ commit }, payload) {
-      commit('setUser', { id: payload.uid, registeredMeetups: [] });
+      commit('setUser', { id: payload.uid, registeredMeetups: [], fbKeys: {} });
     },
     logOut({ commit }) {
       firebase.auth().signOut();
